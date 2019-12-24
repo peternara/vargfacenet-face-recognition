@@ -5,6 +5,7 @@
 from sklearn.svm import SVC, LinearSVC
 from sklearn.model_selection import GridSearchCV
 from sklearn.calibration import CalibratedClassifierCV
+from sklearn.preprocessing import StandardScaler
 from sklearn import metrics
 import pandas as pd
 import numpy as np
@@ -13,6 +14,7 @@ import pickle
 import random
 import pdb
 import os
+import matplotlib.pyplot as plt
 
 def load_train_data(rate, train_emb_path):
     labels = os.listdir(train_emb_path)
@@ -85,10 +87,15 @@ def main(args):
 
     print("eval on train set")
     true_pred = 0
+    not_good_data = 0
     for data, label in zip(train_data, train_label):
-        pred_label = clf.predict([data])[0]
-        if pred_label == label:
-            true_pred += 1
+        if np.array(data).size > 1:
+            pred_label = clf.predict([data])[0]
+            if pred_label == label:
+                true_pred += 1
+        else:
+            not_good_data += 1;        
+    print("count not good train data: ", not_good_data)            
     print("accuracy on train: ", true_pred/len(train_data))
 
     print("predict label for test set")
@@ -99,10 +106,22 @@ def main(args):
 
     f = open("submission.csv", "w")
     f.write("image,label\n")
-    while cnt*step < len(test_data):
+    not_good_data = 0
+    good_test_data = []
+    good_images = []
+    for i in range(len(test_data)):    
+        if np.array(test_data[i]).size != 512:
+            print(np.array(test_data[i]).size)
+        if np.array(test_data[i]).size > 1:
+            good_test_data.append(test_data[i])
+            good_images.append(test_images[i])
+        else: 
+            not_good_data += 1
+    print("count not good test data: ", not_good_data)
+    while cnt*step < len(good_test_data):
         print(cnt, end = "\r")
-        data = test_data[cnt*step: int(cnt + 1)*step]
-        images = test_images[cnt*step: int(cnt + 1)*step]
+        data = good_test_data[cnt*step: int(cnt + 1)*step]
+        images = good_images[cnt*step: int(cnt + 1)*step]
         pred_label = clf.predict(data)
         pred_funct = clf.decision_function(data)
         for i, image in enumerate(images):
@@ -134,3 +153,4 @@ if __name__ == '__main__':
     parser.add_argument("--mode", default="normal", help="'normal' for use train data or 'add' for use train + add data")
     args = parser.parse_args()
     main(args)
+

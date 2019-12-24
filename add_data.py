@@ -31,7 +31,7 @@ def load_test_data(test_emb_path):
 def main():
     #   load test data
     print("load test emb")
-    test_data, test_images = load_test_data("/home/tittit/challenges/AIVIVN/celeb_face_recognition/data/emb_image/test")
+    test_data, test_images = load_test_data("/Volumes/DATA/AIProject/FaceRecognition1/data/embedding/test")
 
     #   load SVM model
     print("load SVM model")
@@ -43,11 +43,22 @@ def main():
     pred_images = []
     pred_labels = []
     pred_functs = []
-
-    while cnt*step < len(test_data):
+    not_good_data = 0
+    good_test_data = []
+    good_images = []
+    for i in range(len(test_data)):    
+        if np.array(test_data[i]).size != 512:
+            print(np.array(test_data[i]).size)
+        if np.array(test_data[i]).size > 1:
+            good_test_data.append(test_data[i])
+            good_images.append(test_images[i])
+        else: 
+            not_good_data += 1
+    print("count not good test data: ", not_good_data)
+    while cnt*step < len(good_test_data):
         print(cnt, end = "\r")
-        data = test_data[cnt*step: int(cnt + 1)*step]
-        images = test_images[cnt*step: int(cnt + 1)*step]
+        data = good_test_data[cnt*step: int(cnt + 1)*step]
+        images = good_images[cnt*step: int(cnt + 1)*step]
         pred_label = clf.predict(data)
         pred_funct = clf.decision_function(data)
         for i, image in enumerate(images):

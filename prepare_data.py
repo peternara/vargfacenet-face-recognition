@@ -4,7 +4,7 @@ import argparse
 import os
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--data_path", default = "/Volumes/DATA/AIProject/celeb_face_recognition/models/vn_celeb_face_recognition")
+parser.add_argument("--data_path", default = "/Volumes/DATA/AIProject/FaceRecognition_origin/models/vn_celeb_face_recognition")
 args = parser.parse_args()
 
 train_path = os.path.join(args.data_path, "train")

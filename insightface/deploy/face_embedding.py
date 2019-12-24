@@ -44,7 +44,7 @@ class FaceModel:
     prefix = _vec[0]
     epoch = int(_vec[1])
     print('loading',prefix, epoch)
-    ctx = mx.gpu(args.gpu)
+    ctx = mx.cpu(args.cpu)
     sym, arg_params, aux_params = mx.model.load_checkpoint(prefix, epoch)
     all_layers = sym.get_internals()
     sym = all_layers['fc1_output']

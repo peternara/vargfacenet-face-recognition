@@ -11,14 +11,14 @@ import os
 parser = argparse.ArgumentParser(description='face model test')
 # general
 parser.add_argument('--image-size', default='112,112', help='')
-parser.add_argument('--model', default='/Volumes/DATA/AIProject/celeb_face_recognition/insightface/models/model-r100-ii/model,0000', help='path to load model.')
+parser.add_argument('--model', default='/Volumes/DATA/AIProject/FaceRecognition_origin/insightface/models/model-r100-ii/model,0000', help='path to load model.')
 parser.add_argument('--ga-model', default='', help='path to load model.')
-parser.add_argument('--gpu', default=0, type=int, help='gpu id')
+parser.add_argument('--cpu', default=0, type=int, help='cpu id')
 parser.add_argument('--det', default=0, type=int, help='mtcnn option, 1 means using R+O, 0 means detect from begining')
 parser.add_argument('--flip', default=0, type=int, help='whether do lr flip aug')
 parser.add_argument('--threshold', default=1.24, type=float, help='ver dist threshold')
 args = parser.parse_args()
-
+print(args)
 model = face_embedding.FaceModel(args)
 
 if not os.path.exists("data/embedding"):
