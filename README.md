@@ -10,3 +10,30 @@
 | **Future**     |Make image preprocessing and verify data.<br/> Use more libs as facenet, vgg_face2,...<br/> Make face recognition demo |
 |**References**  |[1] https://www.aivivn.com/contests/2 <br/> [2]https://forum.machinelearningcoban.com/t/aivivn-face-recognition-1st-solution/4725/33 <br/> [3] https://forum.machinelearningcoban.com/t/aivivn-face-recognition-4th-solution/4734/3 <br/> [4] https://www.kaggle.com/arunkumarramanan/data-science-python-fuel-efficiency-prediction <br/> [5] https://github.com/deepinsight/insightface) |
 | **Results**    |Measure method: MAP@5 <br/> Score: > 0.94 |
+
+
+
+## Chạy chương trình
+```
+Sinh embedding
+```
+python3 prepare_data.py --data_path="thư mục data cuộc thi"
+```
+```
+python3 augment_data
+```
+```
+python3 gen_emb.py
+```
+Huấn luyện mô hình
+```
+python3 model.py --mode="normal"
+```
+Thêm dữ liệu
+```
+python3 add_data.py
+```
+Huấn luyện lại mô hình với dữ liệu thêm
+```
+python3 model.py --mode="add"
+```

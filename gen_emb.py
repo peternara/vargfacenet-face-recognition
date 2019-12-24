@@ -11,7 +11,7 @@ import os
 parser = argparse.ArgumentParser(description='face model test')
 # general
 parser.add_argument('--image-size', default='112,112', help='')
-parser.add_argument('--model', default='/Volumes/DATA/AIProject/FaceRecognition_origin/insightface/models/model-r100-ii/model,0000', help='path to load model.')
+parser.add_argument('--model', default='/Volumes/DATA/AIProject/FaceRecognition/insightface/models/model-r100-ii/model,0000', help='path to load model.')
 parser.add_argument('--ga-model', default='', help='path to load model.')
 parser.add_argument('--cpu', default=0, type=int, help='cpu id')
 parser.add_argument('--det', default=0, type=int, help='mtcnn option, 1 means using R+O, 0 means detect from begining')

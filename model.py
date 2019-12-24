@@ -99,7 +99,7 @@ def main(args):
     print("accuracy on train: ", true_pred/len(train_data))
 
     print("predict label for test set")
-    threshold = -0.55
+    threshold = -0.56
 
     cnt = 0
     step = 2000
@@ -111,12 +111,11 @@ def main(args):
     good_images = []
     for i in range(len(test_data)):    
         if np.array(test_data[i]).size != 512:
-            print(np.array(test_data[i]).size)
-        if np.array(test_data[i]).size > 1:
-            good_test_data.append(test_data[i])
-            good_images.append(test_images[i])
-        else: 
+            print(np.array(test_data[i]).shape)
+            test_data[i] = test_data[i-1]    
             not_good_data += 1
+        good_test_data.append(test_data[i])
+        good_images.append(test_images[i])    
     print("count not good test data: ", not_good_data)
     while cnt*step < len(good_test_data):
         print(cnt, end = "\r")
@@ -147,6 +146,7 @@ def main(args):
             f.write(image + "," + res[:-1] + "\n")
         cnt += 1
     f.close()
+    print("Result: submission.csv")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
